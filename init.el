@@ -13,9 +13,7 @@
 (set-face-attribute 'default nil :font "Fira Code Retina" :height 125)
 (load-theme 'manoj-dark)
 
-
 (require 'package)
-
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
 			 ("org" . "https://orgmode.org/elpa/elpa/")
 			 ("elpa" . "https://elpa.gnu.org/packages/")))
@@ -31,24 +29,39 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(use-package command-log-mode)
 (use-package counsel)
 (use-package ivy
   :diminish
   :bind (("C-s" . swiper))
   :config
   (ivy-mode 1))
+(setq ivy-use-selectable-prompt t)
 
 (use-package magit)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch)
+
+(use-package multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 (use-package telephone-line
   :config
   (telephone-line-mode 1))
 
 
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
+
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 1))
+  
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -61,7 +74,7 @@
  '(global-command-log-mode t)
  '(package-selected-packages
    (quote
-    (telephone-line doom-modeline counsel ivy command-log-mode yaml-mode use-package smartparens sage-shell-mode plsense multiple-cursors magithub lv kotlin-mode ht helm haskell-mode flymake-jslint elpy dockerfile-mode docker-tramp dash-functional conda company-plsense cider bash-completion))))
+    (which-key rainbow-delimiters multiple-cursors counsel telephone-line ivy yaml-mode use-package smartparens sage-shell-mode plsense))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

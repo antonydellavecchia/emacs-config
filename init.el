@@ -39,9 +39,14 @@
   :config
   (ivy-mode 1))
 
-(use-package magit
-  (global-set-key (kbd "C-x g") 'magit-status)
-  (global-set-key (kbd "C-x M-g") 'magit-dispatch))
+(use-package magit)
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch)
+
+(use-package telephone-line
+  :config
+  (telephone-line-mode 1))
+
 
 
 (custom-set-variables
@@ -49,9 +54,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
+ '(global-command-log-mode t)
  '(package-selected-packages
    (quote
-    (counsel ivy command-log-mode yaml-mode use-package smartparens sage-shell-mode plsense multiple-cursors magithub lv kotlin-mode ht helm haskell-mode flymake-jslint elpy dockerfile-mode docker-tramp dash-functional conda company-plsense cider bash-completion))))
+    (telephone-line doom-modeline counsel ivy command-log-mode yaml-mode use-package smartparens sage-shell-mode plsense multiple-cursors magithub lv kotlin-mode ht helm haskell-mode flymake-jslint elpy dockerfile-mode docker-tramp dash-functional conda company-plsense cider bash-completion))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

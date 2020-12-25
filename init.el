@@ -46,7 +46,7 @@
 	 ("C-x b" . counsel-ibuffer)
 	 ("C-x C-f" . counsel-find-file)
 	 :map minibuffer-local-map
-	 ("C-r". 'counsel-minibuffer-history)))
+	 ("C-r" . 'counsel-minibuffer-history)))
 
 (use-package helpful
   :custom
@@ -60,9 +60,9 @@
 
 (use-package general)
 
-(use-package magit)
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-x M-g") 'magit-dispatch)
+(use-package magit
+  :bind (("C-x g" . 'magit-status)
+	 ("C-x M-g" . magit-dispatch)))
 
 (use-package multiple-cursors)
 (general-define-key
@@ -98,7 +98,9 @@
   :init (load-theme 'doom-laserwave t))
 
 (use-package smartparens
-  :hook (prog-mode . smartparens-mode))
+  :hook (prog-mode . smartparens-mode)
+  :bind (("M-p f" . sp-forward-slurp-sexp)
+	 ("M-p b" . sp-backward-slurp-sexp)))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -124,7 +126,8 @@
  '(global-command-log-mode t)
  '(package-selected-packages
    (quote
-    (counsel-projectile counsel-porjectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense))))
+    (counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense)))
+ '(safe-local-variable-values (quote ((projectile-project-run-cmd . "npm start")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

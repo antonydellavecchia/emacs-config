@@ -41,6 +41,7 @@
   :init
   (ivy-rich-mode 1))
 
+()
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
 	 ("C-x b" . counsel-ibuffer)

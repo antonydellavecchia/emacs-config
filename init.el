@@ -14,6 +14,7 @@
 
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
 			 ("org" . "https://orgmode.org/elpa/elpa/")
 			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
@@ -57,16 +58,36 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
+(use-package general)
+
 (use-package magit)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch)
 
 (use-package multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(general-define-key
+ "C-S-c C-S-c" 'mc/edit-lines
+ "C->" 'mc/mark-next-like-this
+ "C-<" 'mc/mark-previous-like-this
+ "C-c C-<" 'mc/mark-all-like-this)
 
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/projects")
+    (setq projectile-project-search-path '("~/projects")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+
+;; M-x all-the-icons-install-fonts on a new machine
+(use-package all-the-icons)
 
 (use-package doom-modeline
   :ensure t
@@ -75,6 +96,9 @@
 
 (use-package doom-themes
   :init (load-theme 'doom-laserwave t))
+
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -100,7 +124,7 @@
  '(global-command-log-mode t)
  '(package-selected-packages
    (quote
-    (doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense))))
+    (counsel-projectile counsel-porjectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

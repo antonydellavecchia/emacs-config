@@ -15,7 +15,6 @@
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-			 ("org" . "https://orgmode.org/elpa/elpa/")
 			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
@@ -41,13 +40,13 @@
   :init
   (ivy-rich-mode 1))
 
-
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
 	 ("C-x b" . counsel-ibuffer)
 	 ("C-x C-f" . counsel-find-file)
 	 :map minibuffer-local-map
 	 ("C-r" . 'counsel-minibuffer-history)))
+
 
 (use-package helpful
   :custom
@@ -111,7 +110,43 @@
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 1)) 
-  
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
+
+(use-package js2-mode
+  :mode "\\.js\\'"
+  :hook (js2-mode . lsp-deferred)
+  :config
+  (setq js-indent-level 2))
+
+(use-package cperl-mode
+  :mode "\\.pl\\'"
+  :hook (cperl-mode . lsp-deferred))
+
+(use-package kotlin-mode
+  :mode "\\.kt\\'"
+  :hook (kotlin-mode . lsp-deferred))
+
+(use-package gradle-mode
+  :config (gradle-mode 1))
+
+(use-package company
+  :after lsp-mode
+  :hook (prog-mode . company-mode)
+  :bind
+  (:map company-active-map
+	("<tab>" . company-complete-selection))
+  (:map lsp-mode-map
+	("<tab>" . company-indent-or-complete-common))
+  :custom
+  (company-minimum-prefix-length 1)
+  (company-idle-delay 0.0))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -127,7 +162,7 @@
  '(global-command-log-mode t)
  '(package-selected-packages
    (quote
-    (counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense)))
+    (gradle-mode kotlin-mode js2-mode lsp-mode counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense)))
  '(safe-local-variable-values (quote ((projectile-project-run-cmd . "npm start")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

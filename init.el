@@ -32,8 +32,9 @@
 (use-package ivy
   :diminish
   :bind (("C-s" . swiper))
-  :config
-  (ivy-mode 1))
+  :custom (ivy-wrap t)
+  :config (ivy-mode 1))
+
 (setq ivy-use-selectable-prompt t)
 
 (use-package ivy-rich
@@ -46,7 +47,6 @@
 	 ("C-x C-f" . counsel-find-file)
 	 :map minibuffer-local-map
 	 ("C-r" . 'counsel-minibuffer-history)))
-
 
 (use-package helpful
   :custom
@@ -63,6 +63,14 @@
 (use-package magit
   :bind (("C-x g" . 'magit-status)
 	 ("C-x M-g" . magit-dispatch)))
+
+(use-package dired
+  :ensure nil
+  :bind (("C-x C-j" . dired-jump)))
+
+(use-package dired-single)
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode))
 
 (use-package multiple-cursors)
 (general-define-key
@@ -124,9 +132,36 @@
   :config
   (setq js-indent-level 2))
 
+
+(setq python-shell-interpreter "ipython" python-shell-interpreter-args "--simple-prompt -i")
+
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable)
+  :bind (("M-p f" . sp-forward-slurp-sexp)))
+
+(add-to-list 'exec-path "~/anaconda3/bin")
+(setenv "PATH" "~/anaconda3/bin:$PATH" '("PATH"))
+(setenv "WORKON_HOME" "/home/antony/anaconda3/envs/")
+
+(use-package conda
+  :ensure t
+  :init
+  (setq conda-anaconda-home (expand-file-name "~/anaconda3"))
+  (setq conda-env-home-directory (expand-file-name "~/anaconda3"))
+  :config
+  (conda-env-initialize-interactive-shells)
+  (conda-env-initialize-eshell)
+  (conda-env-autoactivate-mode t))
+
+
+
 (use-package cperl-mode
   :mode "\\.pl\\'"
-  :hook (cperl-mode . lsp-deferred))
+  :bind (("M-p f" . sp-slurp-hybrid-sexp))
+  :hook (cperl-mode . lsp-deferred)
+  :config (setq electric-pair-mode nil))
 
 (use-package kotlin-mode
   :mode "\\.kt\\'"
@@ -162,7 +197,7 @@
  '(global-command-log-mode t)
  '(package-selected-packages
    (quote
-    (gradle-mode kotlin-mode js2-mode lsp-mode counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense)))
+    (elpy dired dired-single conda gradle-mode kotlin-mode js2-mode lsp-mode counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense)))
  '(safe-local-variable-values (quote ((projectile-project-run-cmd . "npm start")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

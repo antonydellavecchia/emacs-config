@@ -37,13 +37,6 @@
 
 (setq ivy-use-selectable-prompt t)
 
-(use-package all-the-icons-ivy-rich
-  :ensure t
-  :init (all-the-icons-ivy-rich-mode 1))
-
-(use-package ivy-rich
-  :ensure t
-  :after (ivy))
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
@@ -99,7 +92,16 @@
   :config (counsel-projectile-mode))
 
 ;; M-x all-the-icons-install-fonts on a new machine
-(use-package all-the-icons)
+(use-package all-the-icons
+  :ensure t)
+
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(use-package ivy-rich
+  :ensure t
+  :after (ivy))
 
 (use-package doom-modeline
   :ensure t

@@ -89,6 +89,7 @@
   (setq projectile-switch-project-action #'projectile-dired))
 
 (use-package counsel-projectile
+  :ensure t
   :config (counsel-projectile-mode))
 
 ;; M-x all-the-icons-install-fonts on a new machine

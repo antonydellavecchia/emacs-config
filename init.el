@@ -38,8 +38,8 @@
 (setq ivy-use-selectable-prompt t)
 
 (use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
+  :ensure t
+  :after (ivy))
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)

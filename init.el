@@ -139,14 +139,11 @@
   :config
   (setq js-indent-level 2))
 
+(use-package vterm
+  :ensure t
+  :commands vterm)
 
 (setq python-shell-interpreter "ipython" python-shell-interpreter-args "--simple-prompt -i")
-
-(use-package elpy
-  :ensure t
-  :init
-  (elpy-enable)
-  :bind (("M-p f" . sp-forward-slurp-sexp)))
 
 (add-to-list 'exec-path "~/anaconda3/bin")
 (setenv "PATH" "~/anaconda3/bin:$PATH" '("PATH"))
@@ -159,15 +156,18 @@
   (setq conda-env-home-directory (expand-file-name "~/anaconda3"))
   :config
   (conda-env-initialize-interactive-shells)
-  (conda-env-initialize-eshell)
   (conda-env-autoactivate-mode t))
 
-
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))
 
 (use-package cperl-mode
   :mode "\\.pl\\'"
-  :bind (("M-p f" . sp-slurp-hybrid-sexp))
   :hook (cperl-mode . lsp-deferred)
+  :bind
+  (:map cperl-mode-map ("M-p f" . sp-slurp-hybrid-sexp))
   :config (setq electric-pair-mode nil))
 
 (use-package kotlin-mode
@@ -204,7 +204,7 @@
  '(global-command-log-mode t)
  '(package-selected-packages
    (quote
-    (elpy dired dired-single conda gradle-mode kotlin-mode js2-mode lsp-mode counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense)))
+    (vterm elpy dired dired-single conda gradle-mode kotlin-mode js2-mode lsp-mode counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense)))
  '(safe-local-variable-values (quote ((projectile-project-run-cmd . "npm start")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

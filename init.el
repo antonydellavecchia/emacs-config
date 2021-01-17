@@ -139,12 +139,6 @@
   :config
   (setq js-indent-level 2))
 
-(use-package vterm
-  :ensure t
-  :commands vterm
-  :config (setq vterm-max-scrollback 1000))
-  
-
 (setq python-shell-interpreter "ipython" python-shell-interpreter-args "--simple-prompt -i")
 
 (add-to-list 'exec-path "~/anaconda3/bin")
@@ -179,9 +173,14 @@
 (use-package gradle-mode
   :config (gradle-mode 1))
 
+(use-package latex-mode
+  :ensure nil
+  :hook (latex-mode . smartparens-mode))
+
 (use-package company
   :after lsp-mode
   :hook (prog-mode . company-mode)
+  :hook (latex-mode . company-mode)
   :bind
   (:map company-active-map
 	("<tab>" . company-complete-selection))
@@ -190,6 +189,12 @@
   :custom
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0))
+
+(use-package vterm
+  :ensure t
+  :commands vterm
+  :config (setq vterm-max-scrollback 1000))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

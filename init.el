@@ -96,13 +96,14 @@
 (use-package all-the-icons
   :ensure t)
 
-(use-package all-the-icons-ivy-rich
-  :ensure t
-  :init (all-the-icons-ivy-rich-mode 1))
 
 (use-package ivy-rich
   :ensure t
   :after (ivy))
+
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
 
 (use-package doom-modeline
   :ensure t
@@ -137,6 +138,7 @@
   :mode "\\.js\\'"
   :hook (js2-mode . lsp-deferred)
   :config
+  (setq js2-strict-missing-semi-warning nil)
   (setq js-indent-level 2))
 
 (setq python-shell-interpreter "ipython" python-shell-interpreter-args "--simple-prompt -i")
@@ -153,6 +155,7 @@
   :config
   (conda-env-initialize-interactive-shells)
   (conda-env-autoactivate-mode t))
+
 
 (use-package elpy
   :ensure t

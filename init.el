@@ -10,7 +10,7 @@
 ;; visual bell
 (setq visible-bell t)
 
-(set-face-attribute 'default nil :font "Fira Code Retina" :height 125)
+(set-face-attribute 'default nil :font "Fira Code Medium" :height 125)
 
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -77,6 +77,7 @@
  "C-<" 'mc/mark-previous-like-this
  "C-c C-<" 'mc/mark-all-like-this)
 
+(use-package yasnippet)
 (yas-global-mode 1)
 (add-hook 'yas-minor-mode-hook ( lambda ()
 				 (yas-activate-extra-mode 'fundamental-mode)))

@@ -28,6 +28,7 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+
 (use-package counsel)
 (use-package ivy
   :diminish
@@ -76,6 +77,10 @@
  "C-<" 'mc/mark-previous-like-this
  "C-c C-<" 'mc/mark-all-like-this)
 
+(yas-global-mode 1)
+(add-hook 'yas-minor-mode-hook ( lambda ()
+				 (yas-activate-extra-mode 'fundamental-mode)))
+
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)
@@ -95,7 +100,6 @@
 ;; M-x all-the-icons-install-fonts on a new machine
 (use-package all-the-icons
   :ensure t)
-
 
 (use-package ivy-rich
   :ensure t
@@ -127,12 +131,24 @@
   :config
   (setq which-key-idle-delay 1)) 
 
+
+
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
   (lsp-enable-which-key-integration t))
+
+
+
+(use-package glsl-mode)
+
+(use-package lsp-julia
+  :config
+  (setq lsp-julia-default-environment "~/.julia/environments/v1.7"))
+
+
 
 (use-package js2-mode
   :mode "\\.js\\'"
@@ -169,6 +185,30 @@
   (:map cperl-mode-map ("M-p f" . sp-slurp-hybrid-sexp))
   :config (setq electric-pair-mode nil))
 
+
+(use-package zmq)
+(use-package jupyter
+  :bind ("<tab>" . completion-at-point))
+
+(use-package eglot-jl)
+
+(when (cl-find-if-not #'package-installed-p package-selected-packages)
+  (package-refresh-contents)
+  (mapc #'package-install package-selected-packages))
+
+(require 'eglot)
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+
+
+
+(use-package julia-mode
+  :mode "\\.jl\\'"
+  :hook (julia-mode . smartparens-mode)
+  :hook (julia-mode . company-mode)
+  :hook (julia-mode . lsp-deferred))
+
 (use-package kotlin-mode
   :mode "\\.kt\\'"
   :hook (kotlin-mode . lsp-deferred))
@@ -196,8 +236,25 @@
 (use-package vterm
   :ensure t
   :commands vterm
-  :config (setq vterm-max-scrollback 1000))
+  :bind (:map vterm-mode-map
+         ("C-x C-f" . (lambda (&rest _)
+                        (interactive)
+                        (my/vterm-directory-sync)
+                        ;; NOTE
+                        ;; ido/helm also works
+                        (call-interactively 'counsel-find-file))))
+  :config
+  (setq vterm-max-scrollback 1000)
+  (defun my/vterm-directory-sync ()
+    "Synchronize current working directory."
+    (when vterm--process
+      (let* ((pid (process-id vterm--process))
+             (dir (file-truename (format "/proc/%d/cwd" pid))))
+        (setq-local default-directory dir))))
+  )
 
+(use-package org)
+(setq create-lockfiles nil)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -211,8 +268,9 @@
  '(custom-safe-themes
    '("3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" "a3b6a3708c6692674196266aad1cb19188a6da7b4f961e1369a68f06577afa16" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "e1ef2d5b8091f4953fe17b4ca3dd143d476c106e221d92ded38614266cea3c8b" "01cf34eca93938925143f402c2e6141f03abb341f27d1c2dba3d50af9357ce70" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "d6603a129c32b716b3d3541fc0b6bfe83d0e07f1954ee64517aa62c9405a3441" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "730a87ed3dc2bf318f3ea3626ce21fb054cd3a1471dcd59c81a4071df02cb601" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
  '(global-command-log-mode t)
+ '(line-number-mode nil)
  '(package-selected-packages
-   '(pyenv-mode vterm elpy dired dired-single conda gradle-mode kotlin-mode js2-mode lsp-mode counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense))
+   '(clang-format glsl-mode restclient eglot-jl lsp-julia jupyter julia-mode pyenv-mode vterm elpy dired dired-single conda gradle-mode kotlin-mode js2-mode lsp-mode counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense))
  '(safe-local-variable-values '((projectile-project-run-cmd . "npm start"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

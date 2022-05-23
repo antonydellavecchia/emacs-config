@@ -1,3 +1,4 @@
+
 (setq inhibit-startup-message t)
 
 ;; disabling unwanted defaults
@@ -80,7 +81,9 @@
 (use-package yasnippet)
 (yas-global-mode 1)
 (add-hook 'yas-minor-mode-hook ( lambda ()
+
 				 (yas-activate-extra-mode 'fundamental-mode)))
+
 
 (use-package projectile
   :diminish projectile-mode
@@ -147,8 +150,10 @@
 
 (use-package lsp-julia
   :config
-  (setq lsp-julia-default-environment "~/.julia/environments/v1.7"))
+  (setq lsp-julia-default-environment "~/.julia/environments/v1.6"))
 
+
+(use-package jupyter)
 
 
 (use-package js2-mode
@@ -188,9 +193,6 @@
 
 
 (use-package zmq)
-(use-package jupyter
-  :bind ("<tab>" . completion-at-point))
-
 (use-package eglot-jl)
 
 (when (cl-find-if-not #'package-installed-p package-selected-packages)
@@ -203,12 +205,6 @@
 (add-hook 'c++-mode-hook 'eglot-ensure)
 
 
-
-(use-package julia-mode
-  :mode "\\.jl\\'"
-  :hook (julia-mode . smartparens-mode)
-  :hook (julia-mode . company-mode)
-  :hook (julia-mode . lsp-deferred))
 
 (use-package kotlin-mode
   :mode "\\.kt\\'"
@@ -254,6 +250,18 @@
         (setq-local default-directory dir))))
   )
 
+(use-package julia-repl)
+(julia-repl-set-terminal-backend 'vterm)
+(setq vterm-kill-buffer-on-exit nil)
+
+(use-package julia-mode
+  :mode "\\.jl\\'"
+  :init
+  :hook (julia-mode . smartparens-mode)
+  :hook (julia-mode . company-mode)
+  :hook (julia-mode . lsp-deferred)
+  :hook (julia-mode . julia-repl-mode))
+
 (use-package org)
 (setq create-lockfiles nil)
 
@@ -268,10 +276,11 @@
    ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(custom-safe-themes
    '("3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" "a3b6a3708c6692674196266aad1cb19188a6da7b4f961e1369a68f06577afa16" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "e1ef2d5b8091f4953fe17b4ca3dd143d476c106e221d92ded38614266cea3c8b" "01cf34eca93938925143f402c2e6141f03abb341f27d1c2dba3d50af9357ce70" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "d6603a129c32b716b3d3541fc0b6bfe83d0e07f1954ee64517aa62c9405a3441" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "730a87ed3dc2bf318f3ea3626ce21fb054cd3a1471dcd59c81a4071df02cb601" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
+ '(delete-selection-mode nil)
  '(global-command-log-mode t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(clang-format glsl-mode restclient eglot-jl lsp-julia jupyter julia-mode pyenv-mode vterm elpy dired dired-single conda gradle-mode kotlin-mode js2-mode lsp-mode counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense))
+   '(julia-repl clang-format glsl-mode restclient eglot-jl lsp-julia jupyter julia-mode pyenv-mode vterm elpy dired dired-single conda gradle-mode kotlin-mode js2-mode lsp-mode counsel-projectile counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens sage-shell-mode plsense))
  '(safe-local-variable-values '((projectile-project-run-cmd . "npm start"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

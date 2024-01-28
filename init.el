@@ -24,8 +24,6 @@
 (use-package exec-path-from-shell)
 (exec-path-from-shell-initialize)
 
-
-
 (use-package editorconfig
   :ensure t
   :config
@@ -34,10 +32,8 @@
 (use-package typescript-mode)
 (setq typescript-indent-level 2)
 
-
 (use-package flymake-json
   :hook (json-mode . flymake-json-load))
-
 
 (use-package glsl-mode)
 
@@ -46,37 +42,37 @@
 
 
 (use-package zmq)
+
 (load (expand-file-name "config/terminal.el" user-emacs-directory))
+(setq initial-buffer-choice 'vterm)
 
+(use-package eglot
+  :ensure t
+  :hook
+  (c-mode . eglot-ensure)
+  (c++-mode . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  (setq eglot-connect-timeout nil))
 
-(require 'eglot)
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
+(load (expand-file-name "config/julia.el" user-emacs-directory))
 
-(setq julia-repl-executable-records
-      '((default "~/.juliaup/bin/julia")                  ; in the executable path
-        ))
-
-(use-package eglot-jl
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
   :init
-  (setq eglot-stay-out-of '(flymake)))
-(setq eglot-connect-timeout nil)
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/projects")
+    (setq projectile-project-search-path '("~/projects")))
+  (setq projectile-switch-project-action #'projectile-dired))
 
-(setq eglot-jl-julia-command "~/.juliaup/bin/julia")
+(use-package counsel-projectile
+  :ensure t
+  :config (counsel-projectile-mode))
 
-;;(quelpa '(julia-repl :repo "antonydellavecchia/julia-repl" :fetcher github))
-(use-package julia-repl)
-(julia-repl-set-terminal-backend 'vterm)
-(setq julia-repl-pop-to-buffer nil)
-(setq vterm-kill-buffer-on-exit nil)
-
-(use-package julia-mode
-  :mode "\\.jl\\'"
-  :hook (julia-mode . smartparens-mode)
-  :hook (julia-mode . company-mode)
-  ;;:hook (julia-mode . lsp-mode)
-  :hook (julia-mode . julia-repl-mode))
 
 (use-package latex-mode
   :ensure nil
@@ -85,8 +81,6 @@
 
 (use-package org)
 (setq create-lockfiles nil)
-
-(setq initial-buffer-choice 'vterm)
 
 (setq custom-file (expand-file-name "config/custom.el" user-emacs-directory))
 (load custom-file 'noerror)

@@ -101,22 +101,6 @@
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.0))
 
-(use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  ;; NOTE: Set this to the folder where you keep your Git repos!
-  (when (file-directory-p "~/projects")
-    (setq projectile-project-search-path '("~/projects")))
-  (setq projectile-switch-project-action #'projectile-dired))
-
-(use-package counsel-projectile
-  :ensure t
-  :config (counsel-projectile-mode))
-
 (use-package smartparens
   :ensure t
   :config
@@ -125,3 +109,4 @@
   :bind
   (("M-p f" . sp-forward-slurp-sexp)  ; Bind keys for slurping
    ("M-p b" . sp-backward-slurp-sexp))) ; and barfing
+

@@ -1,3 +1,9 @@
+(setq auto-save-file-name-transforms
+      `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name
+                 (concat user-emacs-directory "backups")))))
 
 (setq indent-tabs-mode nil)
 (setq js-indent-level 2)
@@ -42,7 +48,7 @@
 
 
 (use-package zmq)
-
+(load (expand-file-name "config/org.el" user-emacs-directory))
 (load (expand-file-name "config/terminal.el" user-emacs-directory))
 (setq initial-buffer-choice 'vterm)
 
@@ -79,7 +85,7 @@
   :mode "\\.tex\\'"
   :hook (latex-mode . smartparens-mode))
 
-(use-package org)
+
 (setq create-lockfiles nil)
 
 (setq custom-file (expand-file-name "config/custom.el" user-emacs-directory))

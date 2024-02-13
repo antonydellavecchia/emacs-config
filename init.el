@@ -35,9 +35,6 @@
   :config
   (editorconfig-mode 1))
 
-(use-package typescript-mode)
-(setq typescript-indent-level 2)
-
 (use-package flymake-json
   :hook (json-mode . flymake-json-load))
 

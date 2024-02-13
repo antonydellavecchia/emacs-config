@@ -4,9 +4,14 @@
 (setq julia-repl-pop-to-buffer nil)
 (setq vterm-kill-buffer-on-exit nil)
 
-(setq julia-repl-executable-records
-      '((default "~/.juliaup/bin/julia")                  ; in the executable path
-        ))
+(cond
+ ((string-equal system-name "priort")
+  (setq julia-repl-executable-records
+	'((default "/usr/site-local/bin/julia-latest"))))
+  ((string-equal system-name "marvin")
+   (setq julia-repl-executable-records
+	 '((default "~/.juliaup/bin/julia")))))
+
 
 (use-package julia-mode
   :mode "\\.jl\\'"

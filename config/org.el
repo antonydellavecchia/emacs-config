@@ -1,6 +1,11 @@
 (use-package org)
 
-(setq org-directory "/home/antonydv/org")
+(cond
+ ((string-equal system-name "priort")
+  (setq org-directory "/homes/combi/vecchia/local/org"))
+ ((string-equal system-name "marvin")
+  (setq org-directory "/home/antonydv/org")))
+
 (setq org-startup-indented t)
 (setq org-src-fontify-natively t)
 

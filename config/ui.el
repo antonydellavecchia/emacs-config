@@ -9,6 +9,7 @@
 ;; visual bell
 (setq visible-bell t)
 
+
 (set-face-attribute 'default nil :font "Fira Code Retina" :height 125)
 (set-frame-parameter (selected-frame) 'alpha '(75 . 100))
 (add-to-list 'default-frame-alist '(alpha . (75 . 50)))

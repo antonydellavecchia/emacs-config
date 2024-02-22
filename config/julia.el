@@ -3,6 +3,7 @@
 (julia-repl-set-terminal-backend 'vterm)
 (setq julia-repl-pop-to-buffer nil)
 (setq vterm-kill-buffer-on-exit nil)
+(setq julia-indent-offset 2)
 
 (cond
  ((string-equal system-name "priort")

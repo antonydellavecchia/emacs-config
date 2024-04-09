@@ -47,6 +47,7 @@
 (use-package zmq)
 (load (expand-file-name "config/org.el" user-emacs-directory))
 (load (expand-file-name "config/terminal.el" user-emacs-directory))
+(use-package vterm)
 (setq initial-buffer-choice 'vterm)
 
 (load (expand-file-name "config/cpp.el" user-emacs-directory))

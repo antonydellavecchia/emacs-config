@@ -50,6 +50,7 @@
 (use-package vterm)
 (setq initial-buffer-choice 'vterm)
 
+(load (expand-file-name "config/cpp.el" user-emacs-directory))
 (use-package eglot
   :ensure t
   :hook
@@ -60,6 +61,7 @@
   (setq eglot-connect-timeout nil))
 
 (load (expand-file-name "config/julia.el" user-emacs-directory))
+
 
 (use-package projectile
   :diminish projectile-mode
@@ -78,7 +80,12 @@
   :config (counsel-projectile-mode))
 
 
-(use-package latex-mode
+(use-package tex
+  :defer t
+  :ensure auctex)
+
+(setq TeX-view-program-selection '((output-pdf "Evince")))
+(use-package LaTeX-mode
   :ensure nil
   :mode "\\.tex\\'"
   :hook (latex-mode . smartparens-mode))

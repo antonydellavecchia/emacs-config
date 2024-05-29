@@ -27,6 +27,7 @@
 
 (load (expand-file-name "config/ui.el" user-emacs-directory) 'noerror)
 
+(use-package protobuf-mode)
 (use-package exec-path-from-shell)
 (exec-path-from-shell-initialize)
 

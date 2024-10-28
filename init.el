@@ -6,6 +6,7 @@
                  (concat user-emacs-directory "backups")))))
 
 (setq indent-tabs-mode nil)
+(setq tab-width 2)
 (setq js-indent-level 2)
 
 (require 'package)
@@ -29,6 +30,9 @@
 
 (use-package exec-path-from-shell)
 (exec-path-from-shell-initialize)
+
+(use-package tikz)
+(setq tikz-viewer "evince")
 
 (use-package editorconfig
   :ensure t
@@ -87,7 +91,7 @@
 (setq TeX-view-program-selection '((output-pdf "Evince")))
 (use-package latex-mode
   :ensure nil
-  :mode "\\.tex\\'"
+  :mode ("\\.tex\\'" "\\.tikz\\'")
   :hook (latex-mode . smartparens-mode))
 
 

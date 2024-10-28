@@ -81,16 +81,7 @@
   :config (counsel-projectile-mode))
 
 
-(use-package tex
-  :defer t
-  :ensure auctex)
-
-(setq TeX-view-program-selection '((output-pdf "Evince")))
-(use-package LaTeX-mode
-  :ensure nil
-  :mode "\\.tex\\'"
-  :hook (latex-mode . smartparens-mode))
-
+(load (expand-file-name "config/latex.el" user-emacs-directory))
 
 (setq create-lockfiles nil)
 

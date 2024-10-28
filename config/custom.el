@@ -15,7 +15,7 @@
  '(global-command-log-mode t)
  '(line-number-mode nil)
  '(package-selected-packages
-   '(markdown-mode protobuf-mode tikz jsonrpc fira-code-mode pkg-info cmake-ide cmake-mode tex auctex fira-code-mode pkg-info eglot-jl company-box company all-the-icons-ivy-rich all-the-icons zmq typescript-mode dired-hide-dotfiles magit vundo rainbow-mode quelpa exec-path-from-shell evil editorconfig yafolding flymake-json json-mode ejson-mode git-blamed julia-mode julia-repl clang-format glsl-mode julia-mode vterm dired-single counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens plsense))
+   '(pdf-tools markdown-mode protobuf-mode tikz jsonrpc fira-code-mode pkg-info cmake-ide cmake-mode tex auctex fira-code-mode pkg-info eglot-jl company-box company all-the-icons-ivy-rich all-the-icons zmq typescript-mode dired-hide-dotfiles magit vundo rainbow-mode quelpa exec-path-from-shell evil editorconfig yafolding flymake-json json-mode ejson-mode git-blamed julia-mode julia-repl clang-format glsl-mode julia-mode vterm dired-single counsel-projectile projectile general doom-modeline ivy-rich doom-themes helpful which-key rainbow-delimiters multiple-cursors counsel ivy yaml-mode use-package smartparens plsense))
  '(safe-local-variable-values '((projectile-project-run-cmd . "npm start")))
  '(warning-suppress-types '((emacs) (comp))))
 (custom-set-faces

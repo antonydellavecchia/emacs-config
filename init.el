@@ -28,6 +28,7 @@
 
 (load (expand-file-name "config/ui.el" user-emacs-directory) 'noerror)
 
+(use-package protobuf-mode)
 (use-package exec-path-from-shell)
 (exec-path-from-shell-initialize)
 
@@ -84,16 +85,7 @@
   :config (counsel-projectile-mode))
 
 
-(use-package tex
-  :defer t
-  :ensure auctex)
-
-(setq TeX-view-program-selection '((output-pdf "Evince")))
-(use-package latex-mode
-  :ensure nil
-  :mode ("\\.tex\\'" "\\.tikz\\'")
-  :hook (latex-mode . smartparens-mode))
-
+(load (expand-file-name "config/latex.el" user-emacs-directory))
 
 (setq create-lockfiles nil)
 

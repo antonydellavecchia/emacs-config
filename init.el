@@ -40,6 +40,9 @@
   :config
   (editorconfig-mode 1))
 
+
+(load (expand-file-name "config/mrdi.el" user-emacs-directory))
+
 (use-package flymake-json
   :hook (json-mode . flymake-json-load))
 
@@ -95,7 +98,6 @@
 
 (load (expand-file-name "config/julia.el" user-emacs-directory))
 
-(load (expand-file-name "config/mrdi.el" user-emacs-directory))
 
 (use-package projectile
   :diminish projectile-mode

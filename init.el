@@ -53,7 +53,35 @@
 (load (expand-file-name "config/org.el" user-emacs-directory))
 (load (expand-file-name "config/terminal.el" user-emacs-directory))
 (use-package vterm)
-(setq initial-buffer-choice 'vterm)
+
+(use-package dashboard
+  :ensure t
+  :init
+  (setq dashboard-projects-backend 'projectile)
+  (setq dashboard-items '((recents   . 5)
+                        (projects  . 5)
+                        ;;(agenda    . 5)
+                        ;;(registers . 5)
+			))
+  (setq dashboard-icon-type 'all-the-icons)
+  (setq dashboard-startupify-list '(dashboard-insert-banner
+                                  dashboard-insert-newline
+                                  dashboard-insert-banner-title
+                                  dashboard-insert-newline
+                                  dashboard-insert-navigator
+                                  dashboard-insert-newline
+                                  dashboard-insert-init-info
+                                  dashboard-insert-items
+                                  dashboard-insert-newline
+                                  dashboard-insert-footer))
+  :config
+  (dashboard-setup-startup-hook))
+
+(setq initial-buffer-choice
+      (lambda () (get-buffer-create dashboard-buffer-name)
+	(dashboard-refresh-buffer)
+	))
+
 
 (load (expand-file-name "config/cpp.el" user-emacs-directory))
 (use-package eglot
@@ -67,6 +95,7 @@
 
 (load (expand-file-name "config/julia.el" user-emacs-directory))
 
+(load (expand-file-name "config/mrdi.el" user-emacs-directory))
 
 (use-package projectile
   :diminish projectile-mode
@@ -86,9 +115,12 @@
 
 
 (load (expand-file-name "config/latex.el" user-emacs-directory))
+(load (expand-file-name "config/macaulay2.el" user-emacs-directory))
+(load (expand-file-name "config/lean.el" user-emacs-directory))
 
 (setq create-lockfiles nil)
 
 (setq custom-file (expand-file-name "config/custom.el" user-emacs-directory))
 (load custom-file 'noerror)
+
 
